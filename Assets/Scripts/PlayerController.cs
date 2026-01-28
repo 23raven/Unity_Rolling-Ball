@@ -1,8 +1,13 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using TMPro;
+
 
 public class PlayerController : MonoBehaviour
 {
+    private int count;
+    public TextMeshProUGUI countText;
+
     // Rigidbody of the player.
     private Rigidbody rb;
 
@@ -15,9 +20,11 @@ public class PlayerController : MonoBehaviour
 
     // Start is called before the first frame update.
     void Start()
-    {
+    {SetCountText();
+        count = 0;
         // Get and store the Rigidbody component attached to the player.
         rb = GetComponent<Rigidbody>();
+        SetCountText();
     }
 
     // This function is called when a move input is detected.
@@ -29,6 +36,11 @@ public class PlayerController : MonoBehaviour
         // Store the X and Y components of the movement.
         movementX = movementVector.x;
         movementY = movementVector.y;
+    }
+
+    void SetCountText()
+    {
+        countText.text = "Count: " + count.ToString();
     }
 
     // FixedUpdate is called once per fixed frame-rate frame.
@@ -43,12 +55,16 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        count = count + 1;
         // Check if the object the player collided with has the "PickUp" tag.
         if (other.gameObject.CompareTag("PickUp"))
         {
             // Deactivate the collided object (making it disappear).
             other.gameObject.SetActive(false);
+            SetCountText();
         }
+
+        
     }
 
 
