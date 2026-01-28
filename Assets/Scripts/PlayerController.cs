@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour
 {
     private int count;
     public TextMeshProUGUI countText;
+    public GameObject winTextObject;
+
 
     // Rigidbody of the player.
     private Rigidbody rb;
@@ -20,7 +22,9 @@ public class PlayerController : MonoBehaviour
 
     // Start is called before the first frame update.
     void Start()
-    {SetCountText();
+    {
+        winTextObject.SetActive(false);
+        SetCountText();
         count = 0;
         // Get and store the Rigidbody component attached to the player.
         rb = GetComponent<Rigidbody>();
@@ -41,6 +45,10 @@ public class PlayerController : MonoBehaviour
     void SetCountText()
     {
         countText.text = "Count: " + count.ToString();
+        if (count >= 8)
+        {
+            winTextObject.SetActive(true);
+        }
     }
 
     // FixedUpdate is called once per fixed frame-rate frame.
